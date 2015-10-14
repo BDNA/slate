@@ -1,13 +1,11 @@
 ---
-title: API Reference
+title: BDNA Data Platform API Reference
 
 language_tabs:
   - shell
-  - ruby
-  - python
+
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -18,151 +16,79 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the BDNA Data Platform API! Technopedia APIs are now integrated with BDNA Data Platform Version 5.0. These APIs offer easy access to the Technopedia Catalog and Content and Normalize data.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Technopedia APIs are designed to adhere to the REST principles and provide the interface to access Technopedia and Normalize data.
+These APIs provide full CRUD functionality on Technopedia Catalog and Content and Retrieve functionality on Normalize data.
 
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
 # Authentication
 
-> To authorize, use this code:
+The BDNA Data Platform APIs support both LDAP/AD as well as Windows Local User authentication.
+The client application needs to first login to the API by using the Login API. The json payload for the Login api should contain the username and password. The response from the Login api is an Authorization token that is valid for 24 hours. For subsequent requests to the resources, this Authorization token needs to be sent in the HTTP Header “Authorization-Token”.
 
-```ruby
-require 'kittn'
+To obtain the Authorization Token, HTTP POST has to be made to
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+http://<DataPlatformHostName>/bdna-api/api/Login
 
-```python
-import kittn
+with Headers:
 
-api = kittn.authorize('meowmeowmeow')
-```
+Content-Type: application/json
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+Accept: application/json
 
-> Make sure to replace `meowmeowmeow` with your API key.
+Json Payload:
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+{ "UserName": "username", "Password":"Password"}
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-`Authorization: meowmeowmeow`
+The above request would result in a response that contains the Authorization Token.  This Authorization-Token should be passed in as a HTTP Header in subsequent requests to the APIs. The Authorization-Token is valid for 24 hours from the time of generation, after which the client application needs to login back into the API using the steps given above to obtain the Authorization-Token.
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
 
-# Kittens
+# Authorization
 
-## Get All Kittens
+Authorization is at three levels – at the Role level, at the Feature level and at the Content Pack Subscription level.  
 
-```ruby
-require 'kittn'
+## Role Level
+To make GET requests, the user should have TECHNOPEDIA_VIEWER role. 
+For PUT, POST and DELETE, the user should have TECHNOPEDIA_EDITOR or TECHNOPEDIA_ADMINISTRATOR role.
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
+## Feature Level
+The Data Platform License Key should have Normalize feature enabled in order to access the Normalize data via API. 
 
-```python
-import kittn
+## Content Pack Subscription Level
+The Data Platform License Key by default enables access to Technopedia Catalog APIs.  API access to Technopedia Content Pack APIs depend on the subscription level to Technopedia. 
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
 
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
+# Private Catalog
 
-> The above command returns JSON structured like this:
+# Response Format
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
+# Errors
 
-This endpoint retrieves all kittens.
+# OData
+Technopedia APIs are based on OData (Open Data Protocol). OData is a data access protocol for the web. It is an OASIS standard that defines the best practice for building and consuming RESTful APIs. It provides a uniform way to query and manipulate data sets. OData RESTful APIs are easy to consume. Technopedia APIs support Version 4 of the OData protocol.
 
-### HTTP Request
+The OData metadata, a machine-readable description of the data model of the APIs, enables the creation of powerful generic client proxies and tools. 
 
-`GET http://example.com/api/kittens`
+Please refer to <a href='http://www.odata.org/libraries/'>http://www.odata.org/libraries/</a> for a list of OData libraries available to implement Client applications in .NET, Java, JavaScript, Python, C++,
+and other platforms. 
 
-### Query Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+# Methods
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
+## GET
 
-## Get a Specific Kitten
+## POST
 
-```ruby
-require 'kittn'
+## PUT
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
+## DELETE
 
-```python
-import kittn
+# Pagination
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+# APIs
 
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
+## Technopedia APIs
 
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
+## Normalize APIs
