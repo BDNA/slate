@@ -341,10 +341,9 @@ html, body {
     box-sizing: border-box;
     display: block;
     @include text-shadow($main-embossed-text-shadow);
-
     @extend %left-col;
   }
-
+ 
   &>ul, &>ol {
     padding-left: $main-padding + 15px;
   }
@@ -363,7 +362,8 @@ html, body {
     margin-bottom: $h1-margin-bottom;
     margin-top: 2em;
     border-top: 1px solid #ddd;
-    background-image: linear-gradient(to bottom, #fff, #f9f9f9);
+    background-image: linear-gradient(to bottom, #fff, #fff);
+    padding-top: 23px;
   }
 
   h1:first-child, div:first-child + h1 {
