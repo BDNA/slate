@@ -619,6 +619,24 @@ Response Status: 201
     "PRIVATE_TYPE": "Proprietary entry"
 }
 ```
+POST http method is used to create proprietary manufacturers. All proprietary objects are part of Private Catalog.
+
+Private Catalog object resources are assigned negative numbers for id fields.
+
+Upon successful creation, HTTP status code 201 is returned. 
+
+If the POST fails with 400 Bad Request and additional error message, it could be because of the following reasons:
+
+* The user is trying to create a duplicate manufacturer
+
+* Some required columns have missing values
+
+* Incorrect column names or incompatible values for the column datatype
+
+* Incorrect JSON format
+
+The actual reason is indicated in the error message in the json response. 
+
 
 ## Update an existing manufacturer
 
