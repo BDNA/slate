@@ -47,20 +47,9 @@ The maximum expansion depth varies from one api resource to another, but it is a
 
 ## $expand
 
+> GET /odata/CAT_SW_PRODUCT?$top=2&$expand=CAT_MANUFACTURER HTTP/1.1
+
 ```json
-GET /odata/CAT_SW_PRODUCT?$top=2&$expand=CAT_MANUFACTURER HTTP/1.1
-Host: DataPlatformServerName
-Content-Type: application/json
-Accept: application/json
-Authorization-Token: xxxxxxxxxxxxxxxxxxxxx
-Cache-Control: no-cache
-
-Example Request:
-
-http://DataPlatformServer/bdna-api/odata/CAT_SW_PRODUCT?$top=2&$expand=CAT_MANUFACTURER
-
-Example Response:
-
 {
     "@odata.context": "http://DataPlatformServer/bdna-api/odata/$metadata#CAT_SW_PRODUCT",
     "value": [
@@ -222,14 +211,9 @@ The value of the $select query option is a comma-separated list of properties. T
 
 ## $filter
 
-```json
-GET /odata/CAT_SW_PRODUCT?$filter=startswith(SOFTWARE, 'Office')&$count=true&$top=2 HTTP/1.1
-Host: DataPlatformServer
-Content-Type: application/json
-Accept: application/json
-Authorization-Token: xxxxxxxxxxx
-Cache-Control: no-cache
+> GET /odata/CAT_SW_PRODUCT?$filter=startswith(SOFTWARE, 'Office')&$count=true&$top=2 HTTP/1.1
 
+```json
 {
     "@odata.context": "http://DataPlatformServer/bdna-api/odata/$metadata#CAT_SW_PRODUCT",
     "@odata.count": 208,
