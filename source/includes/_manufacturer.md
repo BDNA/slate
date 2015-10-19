@@ -1,6 +1,6 @@
-# MANUFACTURER
+## MANUFACTURER
 
-## Retrieve manufacturer
+### Retrieve manufacturer
 
 ```json
 Example Request:
@@ -67,7 +67,7 @@ To retrieve manufacturers that are only in Technopedia Catalog and which have no
 
 
 
-## Create a proprietary manufacturer
+### Create a proprietary manufacturer
 
 ```json
 POST /odata/CAT_P_MANUFACTURER HTTP/1.1
@@ -141,7 +141,7 @@ If the POST fails with 400 Bad Request and additional error message, it could be
 The actual reason is indicated in the error message in the json response. 
 
 
-## Update an existing manufacturer
+### Update an existing manufacturer
 
 ```json
 PUT /odata/CAT_P_MANUFACTURER(-200) HTTP/1.1
@@ -202,4 +202,4 @@ the response would be:
 }
 ```
 
-## Delete an existing manufacturer
+### Delete an existing manufacturer
